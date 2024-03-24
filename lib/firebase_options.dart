@@ -50,19 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBQbQYs6mJy8OYYftFF43Jjn0Av6tIjwPg',
-    appId: '1:531689096987:android:5d02909c787a7641fff5be',
-    messagingSenderId: '531689096987',
-    projectId: 'atomsbox-ecomm-27d08',
-    storageBucket: 'atomsbox-ecomm-27d08.appspot.com',
+    apiKey: 'AIzaSyAPSOEZqQ1GJ7x5X2N7Jk8ejgjcMK0TRkg',
+    appId: '1:437738972765:android:1905635e2ff20757098fb4',
+    messagingSenderId: '437738972765',
+    projectId: 'quirkandthread-a151e',
+    storageBucket: 'quirkandthread-a151e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCSPKk73Y0132pOD5Ps97JvsSi67McZjY8',
-    appId: '1:531689096987:ios:5c228e49133f23f3fff5be',
-    messagingSenderId: '531689096987',
-    projectId: 'atomsbox-ecomm-27d08',
-    storageBucket: 'atomsbox-ecomm-27d08.appspot.com',
+    apiKey: 'AIzaSyDczOZTnh675Qypt7sd-e9E6k4qiv8gQlw',
+    appId: '1:437738972765:ios:28723270d489284c098fb4',
+    messagingSenderId: '437738972765',
+    projectId: 'quirkandthread-a151e',
+    storageBucket: 'quirkandthread-a151e.appspot.com',
     iosBundleId: 'com.example.ecommerceWithFlutterFirebaseAndStripe',
   );
 }

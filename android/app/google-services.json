@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "437738972765",
+    "project_id": "quirkandthread-a151e",
+    "storage_bucket": "quirkandthread-a151e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437738972765:android:1905635e2ff20757098fb4",
+        "android_client_info": {
+          "package_name": "com.example.ecommerce_with_flutter_firebase_and_stripe"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPSOEZqQ1GJ7x5X2N7Jk8ejgjcMK0TRkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437738972765:android:b8b91761858e0a94098fb4",
+        "android_client_info": {
+          "package_name": "com.example.quirknthread"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPSOEZqQ1GJ7x5X2N7Jk8ejgjcMK0TRkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
