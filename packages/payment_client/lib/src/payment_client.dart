@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 
 // TODO: Add your Cloud Functions URLs here
 const ENDPOINT_METHOD_ID_URL =
-    "https://stripe-pay-endpoint-method-id-yln66foica-uc.a.run.app";
+    "https://stripe-pay-endpoint-method-id-6qzypqmxka-uc.a.run.app";
 
 const ENDPOINT_INTENT_ID_URL =
-    "https://stripe-pay-endpoint-intent-id-yln66foica-uc.a.run.app";
+    "https://stripe-pay-endpoint-method-id-6qzypqmxka-uc.a.run.app";
 
 class PaymentClient {
   final http.Client client;
@@ -17,7 +17,7 @@ class PaymentClient {
   Future<Map<String, dynamic>> processPayment({
     required String paymentMethodId,
     required List<Map<String, dynamic>> items,
-    String currency = 'eur',
+    String currency = 'sgd',
     bool useStripeSdk = true,
   }) async {
     final url = Uri.parse(ENDPOINT_METHOD_ID_URL);
@@ -35,6 +35,7 @@ class PaymentClient {
     );
     return json.decode(response.body);
   }
+
 
   Future<Map<String, dynamic>> confirmPayment({
     required String paymentIntentId,

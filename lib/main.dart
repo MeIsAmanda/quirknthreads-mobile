@@ -33,9 +33,9 @@ Future<void> main() async {
   );
 
   // // TODO: Add your Stripe publishable key here
-  // Stripe.publishableKey =
-  //     'pk_test_51L7cFkBAloH97gpnJnFBulAdxQ5IcE3C2LXUAVAQSe9c0iFh96N3EwndUU4Qdh7D2i20NnlMxevzWYN2iasrRcwJ00Ipz5b6sL';
-  // await Stripe.instance.applySettings();
+  Stripe.publishableKey =
+      'pk_test_51P1ThsDAIh3MeY43OlsDies6FTGvca6uvc9GBqNCwA0TCtiWmDUQQLxA01SsLMfvWupARQ7bSTkPGK3kIveSyd6h006HEdoU38';
+  await Stripe.instance.applySettings();
   runApp(const MyApp());
 }
 

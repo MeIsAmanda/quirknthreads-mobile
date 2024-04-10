@@ -1,4 +1,3 @@
-import 'package:ecommerce_with_flutter_firebase_and_stripe/models/cart_item.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';

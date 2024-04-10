@@ -25,7 +25,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               Text(
@@ -91,6 +91,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   processPayment() async {
+    //use the information without accessing the details to avoid compromising the data
     final paymentMethod = await Stripe.instance.createPaymentMethod(
       params: const PaymentMethodParams.card(
         paymentMethodData: PaymentMethodData(),
@@ -105,17 +106,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     print(response);
     if (response['requiresAction'] == true &&
         response['clientSecret'] != null) {
-      // final paymentIntent =
-      //     await Stripe.instance.handleNextAction(response['clientSecret']);
+      final paymentIntent =
+          await Stripe.instance.handleNextAction(response['clientSecret']);
 
-      // print(paymentIntent);
-      // if (paymentIntent.status == PaymentIntentsStatus.RequiresConfirmation) {
-      // final response = await paymentClient.confirmPayment(
-      //   paymentIntentId: paymentIntent.id,
-      // );
+      print(paymentIntent);
+      if (paymentIntent.status == PaymentIntentsStatus.RequiresConfirmation) {
+      final response = await paymentClient.confirmPayment(
+        paymentIntentId: paymentIntent.id,
+      );
 
-      // print(response);
-      // }
+      print(response);
+      }
     }
   }
 }

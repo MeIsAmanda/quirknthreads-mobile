@@ -9,13 +9,12 @@ class CategoryRepository {
 
   Future<List<Category>> fetchCategories() async {
     try {
-      final categoriesData = await dbClient.fetchAll(collection: 'categories');
-      // final categoriesData = await dbClient.fetchAllFromBundle(
-      //   collection: 'categories',
-      //   // TODO: Add your bundle URL here
-      //   bundleUrl:
-      //       'https://us-central1-atomsbox-ecomm-27d08.cloudfunctions.net/ext-firestore-bundle-builder-serve',
-      // );
+      // final categoriesData = await dbClient.fetchAll(collection: 'categories');
+      final categoriesData = await dbClient.fetchAllFromBundle(
+        collection: 'categories',
+        bundleUrl:
+            'https://us-central1-quirkandthread-a151e.cloudfunctions.net/ext-firestore-bundle-builder-serve',
+      );
       return categoriesData
           .map<Category>((categoryData) =>
               Category.fromJson(categoryData.data, id: categoryData.id))
