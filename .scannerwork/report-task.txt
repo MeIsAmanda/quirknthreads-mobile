@@ -1,0 +1,6 @@
+projectKey=QuirkAndThreadsMobile
+serverUrl=http://localhost:9000
+serverVersion=10.5.0.89998
+dashboardUrl=http://localhost:9000/dashboard?id=QuirkAndThreadsMobile
+ceTaskId=0a818570-3cb8-4e0a-a0e8-bdc0d5e9474a
+ceTaskUrl=http://localhost:9000/api/ce/task?id=0a818570-3cb8-4e0a-a0e8-bdc0d5e9474a
