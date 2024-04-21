@@ -1,4 +1,6 @@
 import 'package:db_client/db_client.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/checkout_repository.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/order_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -6,6 +8,7 @@ import 'package:payment_client/payment_client.dart';
 
 import 'firebase_options.dart';
 import 'models/cart.dart';
+import 'models/category.dart';
 import 'repositories/cart_repository.dart';
 import 'repositories/category_repository.dart';
 import 'repositories/product_repository.dart';
@@ -19,6 +22,8 @@ final paymentClient = PaymentClient();
 final categoryRepository = CategoryRepository(dbClient: dbClient);
 final productRepository = ProductRepository(dbClient: dbClient);
 const cartRepository = CartRepository();
+final orderRepository = OrderRepository(dbClient: dbClient);
+final checkOutRepository = CheckoutRepository(paymentClient: paymentClient);
 
 const userId = 'user_1234';
 var cart = const Cart(
@@ -46,6 +51,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      // theme: const AppTheme().themeData,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -70,7 +76,8 @@ class MyApp extends StatelessWidget {
         if (settings.name == '/catalog') {
           return MaterialPageRoute(
             builder: (context) => CatalogScreen(
-              category: settings.arguments as String,
+              // category: settings.arguments as String,
+              category: settings.arguments as Category,
             ),
           );
         } else {

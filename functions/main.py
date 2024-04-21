@@ -3,14 +3,17 @@
 # Deploy with `firebase deploy`
 import stripe
 
+import google.cloud.firestore
+
 from firebase_functions import https_fn
-from firebase_admin import initialize_app
+from firebase_admin import initialize_app, firestore
+from firebase_functions.params import SecretParam
 
 # put this is secret manager
-STRIPE_SECRET_KEY = 'sk_test_51P1ThsDAIh3MeY43fEX45h9oPoc7Bv3IzI9stNPXFQKxP2wl3jX7gMaz36R0Nz1XFa4rzBEOiF7UrRgURnRctcuW00NUXIH4e0'
+STRIPE_SECRET_KEY = SecretParam("STRIPE_SECRET_KEY")
 app = initialize_app()
 
-@https_fn.on_request()
+@https_fn.on_request(secrets=[STRIPE_SECRET_KEY])
 def stripe_pay_endpoint_method_id(req: https_fn.Request) -> https_fn.Response:
     print(req.method, req.get_json()) #this prints in the server logs
 
@@ -25,7 +28,7 @@ def stripe_pay_endpoint_method_id(req: https_fn.Request) -> https_fn.Response:
 
     #calculate the total in the server side
 
-    total = 1400
+    total = _calculate_order_amount(items)
 
     try:
         if payment_method_id:
@@ -40,7 +43,7 @@ def stripe_pay_endpoint_method_id(req: https_fn.Request) -> https_fn.Response:
                     'allow_redirects': 'never',
                 }
             }
-            intent = stripe.PaymentIntent.create(api_key=STRIPE_SECRET_KEY, **params)
+            intent = stripe.PaymentIntent.create(api_key=STRIPE_SECRET_KEY.value, **params)
             return _generate_response(intent)
             #return https_fn.Response(status=200, response=intent)
 
@@ -66,3 +69,21 @@ def _generate_response(intent):
         return{"clientSecret": intent.client_secret, "status": intent.status}
     else:
         return {"error": "Failed"}
+
+def _calculate_order_amount(items):
+    total_cost = 0
+
+    firestore_client = google.cloud.firestore.Client = firestore.client()
+    products_documents = firestore_client.collection('products').get()
+
+    for doc in products_documents:
+        doc_data = doc.to_dict()
+        product_id = doc.id
+
+        for item in items:
+            if item['product'].get('id') == product_id:
+                quantity = item['quantity']
+                price = doc_data.get('price', 0)
+                total_cost += quantity * price
+
+    return int(total_cost * 100)

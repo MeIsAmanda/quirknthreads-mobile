@@ -63,7 +63,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               Navigator.pushNamed(
                 context,
                 '/catalog',
-                arguments: category.name,
+                arguments: category,
               );
             },
             child: Hero(

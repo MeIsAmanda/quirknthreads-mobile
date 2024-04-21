@@ -64,6 +64,39 @@ class DbClient {
     });
   }
 
+  Future<DbRecord?> fetchOneById({
+    required String collection,
+    required String documentId,
+}) async {
+    try{
+      final docRef = _firestore.collection(collection).doc(documentId);
+      final doc = await docRef.get();
+      if (!doc.exists){
+        return null;
+      }
+      return DbRecord(id: doc.id, data: doc.data()!);
+    } catch (err) {
+      throw Exception('Error fetching a document: $err');
+    }
+  }
+
+  Future<List<DbRecord>> fetchAllBy({
+    required String collection,
+    required String field,
+    required String value,
+}) async {
+    try {
+      final colRef = _firestore.collection(collection);
+      final query = colRef.where(field, isEqualTo: value);
+      final documents = await query.get();
+      return documents.docs
+                .map((doc)=> DbRecord(id: doc.id, data: doc.data()))
+                .toList();
+    } catch (err) {
+      throw Exception ('Error fetching documents: $err');
+    }
+  }
+
   Stream<List<DbRecord>> streamAll({required String collection}) {
     final colRef = _firestore.collection(collection);
     return colRef.snapshots().map((snapshot) {
