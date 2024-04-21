@@ -1,6 +1,10 @@
+import 'package:auth_client/auth_client.dart';
 import 'package:db_client/db_client.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/auth_repository.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/checkout_repository.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/order_repository.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/screens/login_screen.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/screens/register_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -17,8 +21,11 @@ import 'screens/catalog_screen.dart';
 import 'screens/category_screen.dart';
 import 'screens/checkout_screen.dart';
 
+final authClient = AuthClient();
 final dbClient = DbClient();
 final paymentClient = PaymentClient();
+
+final authRepository = AuthRepository(authClient: authClient, dbClient: dbClient);
 final categoryRepository = CategoryRepository(dbClient: dbClient);
 final productRepository = ProductRepository(dbClient: dbClient);
 const cartRepository = CartRepository();
@@ -37,7 +44,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // // TODO: Add your Stripe publishable key here
+  // Stripe publishable key here
+  // This is not secret
   Stripe.publishableKey =
       'pk_test_51P1ThsDAIh3MeY43OlsDies6FTGvca6uvc9GBqNCwA0TCtiWmDUQQLxA01SsLMfvWupARQ7bSTkPGK3kIveSyd6h006HEdoU38';
   await Stripe.instance.applySettings();
@@ -56,8 +64,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const CategoriesScreen(),
+      home: const RegisterScreen(),
       onGenerateRoute: (settings) {
+        if (settings.name == '/register') {
+          return MaterialPageRoute(
+            builder: (context) => const RegisterScreen(),
+          );
+        }
+        if (settings.name == '/login') {
+          return MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          );
+        }
         if (settings.name == '/categories') {
           return MaterialPageRoute(
             builder: (context) => const CategoriesScreen(),

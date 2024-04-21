@@ -11,6 +11,19 @@ class DbClient {
   DbClient({FirebaseFirestore? firestore})
       : _firestore = firestore ?? FirebaseFirestore.instance;
 
+  Future<void> set({
+    required String collection,
+    required String documentId,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      await _firestore.collection(collection).doc(documentId).set(data);
+
+    } catch (err) {
+      throw Exception('Error setting a document: $err');
+    }
+  }
+
   Future<String> add({
     required String collection,
     required Map<String, dynamic> data,
