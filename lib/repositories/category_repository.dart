@@ -24,6 +24,24 @@ class CategoryRepository {
     }
   }
 
+  Future<Category?> fetchCategory(String categoryId) async {
+    try {
+      final categoryData = await dbClient.fetchOneByIdFromBundle(
+        collection: 'categories',
+        documentId: categoryId,
+        bundleUrl:
+        'https://us-central1-quirkandthread-a151e.cloudfunctions.net/ext-firestore-bundle-builder-serve',
+      );
+      if (categoryData == null) {
+        return null;
+      }
+
+      return Category.fromJson(categoryData.data, id: categoryData.id);
+    } catch (err) {
+      throw Exception('Failed to fetch the categories: $err');
+    }
+  }
+
   Future<void> createCategories() async {
     try {
       for (var category in categories) {

@@ -1,12 +1,24 @@
+import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../main.dart';
+import '../models/form_status.dart';
+import '../state/login/login_cubit.dart';
 
 class LoginScreen extends StatelessWidget{
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // initialize a bloc/cubit
-    return const LoginView();
+    return BlocProvider(
+      create: (context) =>
+          LoginCubit(
+            authRepository: context.read<AuthRepository>(),
+          ),
+      child: const LoginView(),
+    );
   }
 }
 
@@ -20,39 +32,62 @@ class LoginView extends StatelessWidget{
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(label: Text('Email')),
-              onChanged: (value) {
-                // keep track of email (cubit)
-
-              },
-            ),
-            const SizedBox(height: 8.0),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(label: Text('Password')),
-              onChanged: (value) {
-                // keep track of email (cubit)
-              },
-            ),
-            const SizedBox(height: 8.0),
-            FilledButton(onPressed: (){}, child: const Text('Login')),
-            const SizedBox(height: 8.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state.formStatus == FormStatus.submissionSuccess){
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Login Success'),
+              ),
+            );
+          }
+          if (state.formStatus == FormStatus.submissionFailure) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Login Failure'),
+              ),
+            );
+          }
+        },
+        builder: (context, state) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
               children: [
-                Text ('Don\'t have an account?'),
-                TextButton(onPressed: (){}, child: const Text('Register')),
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: const InputDecoration(label: Text('Email')),
+                  onChanged: (value) {
+                    // keep track of email (cubit)
+                    context.read<LoginCubit>().emailChanged(value);
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                TextFormField(
+                  obscureText: true,
+                  decoration: const InputDecoration(label: Text('Password')),
+                  onChanged: (value) {
+                    context.read<LoginCubit>().passwordChanged(value);
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                FilledButton(onPressed: (state.formStatus == FormStatus.submissionInProgress)
+                    ? null : () {
+                  context.read<LoginCubit>().login();
+                }, child: const Text('Login')),
+                const SizedBox(height: 8.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Don\'t have an account?'),
+                    TextButton(onPressed: () {
+                      context.pushNamed('register');
+                    }, child: const Text('Register')),
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-      )
-      );
+            ),
+          );
+        },
+      ),
+    );
   }
 }

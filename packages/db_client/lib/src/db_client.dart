@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
@@ -75,6 +76,35 @@ class DbClient {
           .map((doc) => DbRecord(id: doc.id, data: doc.data()))
           .toList();
     });
+  }
+
+  Future<DbRecord?> fetchOneByIdFromBundle<T>({
+    required String collection, // b
+    required String documentId,// undleId
+    required String bundleUrl,
+  }) async {
+    final response = await http.get(Uri.parse('$bundleUrl/$collection'));
+    final buffer = Uint8List.fromList(response.body.codeUnits);
+    final task = _firestore.loadBundle(buffer);
+
+    task.stream.listen((taskStateProgress) {
+      if (taskStateProgress.taskState == LoadBundleTaskState.success) {
+        print('Bundle loaded successfully');
+      }
+    });
+
+    await task.stream.last;
+
+    final docSnap = await _firestore
+        .collection(collection)
+        .doc(documentId)
+        .get(const GetOptions(source: Source.cache));
+
+    if (!docSnap.exists){
+      return null;
+    }
+    return DbRecord(id: docSnap.id, data: docSnap.data()!);
+
   }
 
   Future<DbRecord?> fetchOneById({

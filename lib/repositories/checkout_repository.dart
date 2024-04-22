@@ -38,6 +38,7 @@ class CheckoutRepository {
           'status': OrderStatus.waitingForPaymentConfirmation,
           'message':
               'The payment requires authentication or additional confirmation',
+          'clientSecret': response['clientSecret'],
         };
       }
       if(response['clientSecret']!= null &&

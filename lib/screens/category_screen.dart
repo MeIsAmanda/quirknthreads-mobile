@@ -2,84 +2,91 @@ import 'dart:math';
 
 import 'package:ecommerce_with_flutter_firebase_and_stripe/main.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/models/category.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/category_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
 
-class CategoriesScreen extends StatefulWidget {
+import '../state/bloc/app_bloc.dart';
+import '../state/category/category_bloc.dart';
+
+class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
 
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
-}
-
-class _CategoriesScreenState extends State<CategoriesScreen> {
-  List<Category> _categories = [];
-  List<int> _extends = [];
-
-  final rnd = Random();
-
-  @override
-  void initState() {
-    _loadCategory();
-    super.initState();
-  }
-
-  void _loadCategory() async {
-    final categories = await categoryRepository.fetchCategories();
-
-    final extents = List<int>.generate(
-      categories.length,
-      (index) => rnd.nextInt(3) + 2,
-    );
-
-    setState(() {
-      _categories = categories;
-      _extends = extents;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final appBlocState = context
+        .watch<AppBloc>()
+        .state;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Categories'),
+          title: const Text('Categories'),
+          actions: [
+            (appBlocState.status == AppStatus.authenticated) ?
+            IconButton(onPressed: () {
+              context.read<AppBloc>().add(AppLogoutRequested());
+            }, icon: const Icon(Icons.logout))
+                : IconButton(
+              onPressed: () {
+                context.goNamed('login');
+              },
+              icon: const Icon(Icons.login),
+            )
+          ]
       ),
-      body: MasonryGridView.count(
-        padding: const EdgeInsets.only(
-          top: 120,
-          left: 4.0,
-          right: 4.0,
-        ),
-        crossAxisCount: 3,
-        mainAxisSpacing: 4.0,
-        crossAxisSpacing: 4.0,
-        itemCount: _categories.length,
-        itemBuilder: (context, index) {
-          final height = _extends[index] * 100;
-          final category = _categories[index];
-          return InkWell(
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                '/catalog',
-                arguments: category,
-              );
-            },
-            child: Hero(
-              tag: category.id,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  image: DecorationImage(
-                    image: NetworkImage(category.imageUrl),
-                    fit: BoxFit.cover,
+      body: BlocBuilder<CategoryBloc, CategoryState>(
+        builder: (context, state) {
+          if (state.status == CategoryStatus.loading ||
+              state.status == CategoryStatus.initial) {
+            return const Center(
+              child: CircularProgressIndicator());
+          }
+          if(state.status == CategoryStatus.loaded) {
+            final extents = List<int>.generate(
+              state.categories.length,
+                (int index) => Random().nextInt(2) + 2,
+            );
+
+          return MasonryGridView.count(
+            padding: const EdgeInsets.only(
+              top: 120,
+              left: 4.0,
+              right: 4.0,
+            ),
+            crossAxisCount: 3,
+            mainAxisSpacing: 4.0,
+            crossAxisSpacing: 4.0,
+            itemCount: state.categories.length,
+            itemBuilder: (context, index) {
+              final height = extents[index] * 100;
+              final category = state.categories[index];
+              return InkWell(
+                onTap: () {
+                  context.pushNamed('catalog',
+                    pathParameters: {'categoryId': category.id},
+                  );
+                },
+                child: Hero(
+                  tag: category.id,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage(category.imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    height: height.toDouble(),
                   ),
                 ),
-                height: height.toDouble(),
-              ),
-            ),
+              );
+            },
           );
+          } else {
+            return const Center(child: Text('Something Went wrong!'));
+          }
         },
       ),
     );

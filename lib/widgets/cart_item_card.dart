@@ -1,7 +1,12 @@
+import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/cart_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 
 import '../main.dart';
 import '../models/cart_item.dart';
+import '../state/cart/cart_bloc.dart';
+
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({super.key, required this.cartItem});
@@ -47,8 +52,9 @@ class CartItemCard extends StatelessWidget {
                           IconButton(
                             visualDensity: VisualDensity.compact,
                             onPressed: () {
-                              cartRepository.addProductToCart(
-                                  cartItem.product, 1);
+                              context.read<CartBloc>().add(
+                                AddToCartEvent(product: cartItem.product),
+                              );
                             },
                             icon: const Icon(Icons.add),
                           ),
@@ -56,10 +62,9 @@ class CartItemCard extends StatelessWidget {
                           IconButton(
                             visualDensity: VisualDensity.compact,
                             onPressed: () {
-                              // cartRepository.removeProductFromCart(
-                              //   cartItem.product,
-                              //   1,
-                              // );
+                              context.read<CartBloc>().add(
+                                RemoveFromCart(product: cartItem.product),
+                              );
                             },
                             icon: const Icon(Icons.remove),
                           ),

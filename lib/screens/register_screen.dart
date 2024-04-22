@@ -2,6 +2,7 @@ import 'package:ecommerce_with_flutter_firebase_and_stripe/main.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../models/form_status.dart';
 import '../state/register/register_cubit.dart';
 import '../main.dart';
@@ -14,8 +15,8 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) =>
           RegisterCubit(
-            authRepository: authRepository,
-            // authRepository: context.read<AuthRepository>(),
+            // authRepository: authRepository,
+            authRepository: context.read<AuthRepository>(),
           ),
       child: const RegisterView(),
     );
@@ -47,7 +48,7 @@ class RegisterView extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
             appBar: AppBar(
-              title: const Text('Login'),
+              title: const Text('Register'),
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -80,7 +81,7 @@ class RegisterView extends StatelessWidget {
                     children: [
                       const Text('Already have an account?'),
                       TextButton(onPressed: () {
-                        // TODO: Navigate to the login screen (GoRouter)
+                        context.pushNamed('login');
                       }, child: const Text('Login')),
                     ],
                   )

@@ -7,11 +7,11 @@ class ProductRepository {
 
   const ProductRepository({required this.dbClient});
 
-  Stream<List<Product>> streamProducts(String category) {
+  Stream<List<Product>> streamProducts(String categoryId) {
     final productsStream = dbClient.streamAllBy(
       collection: 'products',
-      field: 'category',
-      value: category,
+      field: 'categoryId',
+      value: categoryId,
     );
 
     return productsStream.map((productsData) {
