@@ -41,6 +41,6 @@ class CheckoutState extends Equatable {
 
 
   @override
-  List<Object?> get props => [status, paymentStatus, cart, paymentMessage, paymentClientSecret];
+  List<Object?> get props => [status, paymentStatus, cart, paymentMessage, paymentClientSecret, cardComplete];
 
 }

@@ -27,7 +27,7 @@ import 'screens/category_screen.dart';
 import 'screens/checkout_screen.dart';
 
 
-const userId = 'user_1234';
+// const userId = 'user_1234';
 // var cart = const Cart(
 //   userId: userId,
 //   cartItems: [],
@@ -125,6 +125,9 @@ class MyApp extends StatelessWidget {
         ],
         child: Builder(
           builder: (context) {
+            final cart = context.watch<CartBloc>().state.cart;
+            print("main builder");
+            print(cart);
             return MaterialApp.router(
               title: 'Quirk n Threads',
               // theme: const AppTheme().themeData,

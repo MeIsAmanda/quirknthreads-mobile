@@ -29,8 +29,9 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
       Emitter<CatalogState> emit,
       ) async {
     emit(state.copyWith(status: CatalogStatus.loading));
+    print("onloadcatalog");
+    print(state.status);
     try {
-      print("yo");
       print(event.categoryId);
       final category =
           await _categoryRepository.fetchCategory(event.categoryId);
@@ -42,6 +43,7 @@ class CatalogBloc extends Bloc<CatalogEvent, CatalogState> {
         emit(state.copyWith(status: CatalogStatus.loaded,
           category: category,
         ));
+        print(state.status);
       }
       await emit.forEach(
         _productRepository.streamProducts(event.categoryId),

@@ -3,11 +3,13 @@ import 'dart:math';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/main.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/models/category.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/category_repository.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/state/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 
+import '../repositories/auth_repository.dart';
 import '../state/bloc/app_bloc.dart';
 import '../state/category/category_bloc.dart';
 
@@ -19,6 +21,7 @@ class CategoriesScreen extends StatelessWidget {
     final appBlocState = context
         .watch<AppBloc>()
         .state;
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(

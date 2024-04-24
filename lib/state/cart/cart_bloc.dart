@@ -19,6 +19,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
   void _onLoadCart(LoadCartEvent event,
       Emitter<CartState> emit) {
+    print("starting load cart");
     emit(state.copyWith(status: CartStatus.loading));
     try {
       emit(state.copyWith(
@@ -27,10 +28,12 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             userId: event.userId ?? '',
             cartItems: [],
         ),
-      ),
-      );
-    } catch (err) {
+      ),);
+      print("afterload");
+      print(state.status);
+  } catch (err) {
       emit(state.copyWith(status: CartStatus.loading));
+      print(err);
     }
   }
 
@@ -74,10 +77,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         );
         emit(state.copyWith(status: CartStatus.loaded, cart:cart));
         print("after adding");
+        print(state.status);
+        print(cart.cartItems);
         print(cart);
       }
     } catch (err) {
       emit(state.copyWith(status: CartStatus.error));
+      print(err);
     }
   }
 

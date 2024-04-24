@@ -9,12 +9,12 @@ class CartState extends Equatable{
   const CartState({
     this.status = CartStatus.initial,
     this.cart = const Cart(userId: '', cartItems: []),
-});
+  });
 
   CartState copyWith({
     CartStatus? status,
     Cart? cart,
-}) {
+  }) {
     return CartState(
       status: status ?? this.status,
       cart: cart ?? this.cart,
@@ -22,7 +22,5 @@ class CartState extends Equatable{
   }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [status, cart];
 }
-
-final class CartInitial extends CartState {}
