@@ -67,16 +67,20 @@ class AppRouter {
 
     redirect: (context, state) {
       final isAuthenticated = appBloc.state.status == AppStatus.authenticated;
-      final isLogin = state.matchedLocation == '/login';
+      final isLogin = state.matchedLocation == '/';
       final isRegister = state.matchedLocation == '/register';
 
-      // if (isAuthenticated && isLogin) {
-      //   return '/categories';
-      // }
+      if (isAuthenticated && isLogin) {
+        return '/categories';
+      }
 
-      // if (isAuthenticated && isRegister) {
-      //   return '/';
-      // }
+      if (isAuthenticated && isRegister) {
+        return '/';
+      }
+
+      if (!isAuthenticated && !isLogin) {
+        return '/';
+      }
 
       return null;
 
