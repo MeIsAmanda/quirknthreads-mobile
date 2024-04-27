@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:db_client/db_client.dart';
 import 'package:auth_client/auth_client.dart';
@@ -20,17 +21,30 @@ class AuthRepository {
     required String email,
     required String password,
 }) async {
+    print("Inside here");
     final user = await authClient.register(email: email, password: password);
-
+    print("Inside here 2");
     if (user == null) {
       return false;
     }
+    print("Inside here 3");
+    // Set default roles to "customer"
+    final userData = {
+      'email': email,
+      'joinDate': Timestamp.now(),
+      'name': email.split('@')[0], // Use email username as default name
+      'roles': ['customer'],
+      'uid': user.uid,
+    };
 
     await dbClient.set(
       collection: 'users',
       documentId: user.uid,
-      data: {'email': email},
+      data: userData,
     );
+
+    // Send email verification
+    await user.sendEmailVerification();
 
     return true;
 

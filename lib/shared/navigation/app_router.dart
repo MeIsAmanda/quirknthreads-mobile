@@ -20,7 +20,7 @@ class AppRouter {
     routes: <GoRoute>[
       GoRoute(
         name: 'categories',
-        path: '/',
+        path: '/categories',
         builder: (BuildContext context, GoRouterState state) {
           return const CategoriesScreen();
         },
@@ -51,7 +51,7 @@ class AppRouter {
       ),
       GoRoute(
         name: 'login',
-        path: '/login',
+        path: '/',
         builder: (BuildContext context, GoRouterState state) {
           return const LoginScreen();
         },
@@ -71,7 +71,7 @@ class AppRouter {
       final isRegister = state.matchedLocation == '/register';
 
       if (isAuthenticated && isLogin) {
-        return '/';
+        return '/categories';
       }
 
       if (isAuthenticated && isRegister) {

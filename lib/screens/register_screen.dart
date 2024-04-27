@@ -34,7 +34,7 @@ class RegisterView extends StatelessWidget {
       listener: (context, state) {
         if (state.formStatus == FormStatus.submissionSuccess){
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Registration Success'),
+            const SnackBar(content: Text('Registration Success. Please verify your email.'),
             ),
           );
         }

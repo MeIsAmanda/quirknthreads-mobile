@@ -20,6 +20,7 @@ class AuthClient{
           email: email,
           password: password
       );
+      return credential.user;
     } catch (err) {
       throw Exception('Failed to register: $err');
     }
