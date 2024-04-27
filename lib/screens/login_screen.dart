@@ -39,10 +39,17 @@ class LoginView extends StatelessWidget{
               const SnackBar(content: Text('Login Success'),
               ),
             );
+            context.go('/categories');
           }
           if (state.formStatus == FormStatus.submissionFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Login Failure'),
+              ),
+            );
+          }
+          if (state.formStatus == FormStatus.emailVerificationPending) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Email Verification Pending'),
               ),
             );
           }

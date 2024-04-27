@@ -5,4 +5,5 @@ enum FormStatus {
   submissionInProgress,
   submissionSuccess,
   submissionFailure,
+  emailVerificationPending,
 }

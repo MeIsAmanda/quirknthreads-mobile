@@ -66,4 +66,9 @@ class AuthRepository {
     await authClient.logout();
   }
 
+  Future<bool> isEmailVerified() async {
+    final currentUser = await authClient.currentUser;
+    await currentUser?.reload();
+    return currentUser?.emailVerified ?? false;
+  }
 }

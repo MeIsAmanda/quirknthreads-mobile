@@ -78,11 +78,21 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(formStatus: FormStatus.submissionInProgress));
 
     try {
-      await _authRepository.login(
+      final loginResult = await _authRepository.login(
         email: state.email!,
         password: state.password!,
       );
-      emit (state.copyWith(formStatus: FormStatus.submissionSuccess));
+
+      if (loginResult) {
+        final emailVerified = await _authRepository.isEmailVerified();
+        if (!emailVerified) {
+          emit(state.copyWith(formStatus: FormStatus.emailVerificationPending));
+          return;
+        }
+        emit(state.copyWith(formStatus: FormStatus.submissionSuccess));
+      } else {
+        emit(state.copyWith(formStatus: FormStatus.submissionFailure));
+      }
     } catch (err) {
       emit (state.copyWith(formStatus: FormStatus.submissionFailure));
     }
