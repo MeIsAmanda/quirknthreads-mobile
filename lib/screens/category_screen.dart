@@ -18,6 +18,8 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cart = context.watch<CartBloc>().state.cart;
+
     final appBlocState = context
         .watch<AppBloc>()
         .state;
@@ -27,6 +29,19 @@ class CategoriesScreen extends StatelessWidget {
       appBar: AppBar(
           title: const Text('Categories'),
           actions: [
+            IconButton(
+              onPressed: () {
+                // Navigator.pushNamed(context, '/cart');
+                context.pushNamed('cart');
+              },
+              icon: Badge(
+                isLabelVisible: cart.cartItems.isNotEmpty,
+                label: Text('${cart.totalQuantity}'),
+                child: const Icon(Icons.shopping_cart),
+              ),
+            ),
+
+
             (appBlocState.status == AppStatus.authenticated) ?
             IconButton(onPressed: () {
               context.read<AppBloc>().add(AppLogoutRequested());
