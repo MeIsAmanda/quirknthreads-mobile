@@ -70,9 +70,9 @@ class AppRouter {
       final isLogin = state.matchedLocation == '/login';
       final isRegister = state.matchedLocation == '/register';
 
-      if (isAuthenticated && isLogin) {
-        return '/categories';
-      }
+      // if (isAuthenticated && isLogin) {
+      //   return '/categories';
+      // }
 
       if (isAuthenticated && isRegister) {
         return '/';
