@@ -74,9 +74,9 @@ class AppRouter {
       //   return '/categories';
       // }
 
-      if (isAuthenticated && isRegister) {
-        return '/';
-      }
+      // if (isAuthenticated && isRegister) {
+      //   return '/';
+      // }
 
       return null;
 
