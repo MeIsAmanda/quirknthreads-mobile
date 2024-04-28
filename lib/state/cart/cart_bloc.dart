@@ -15,6 +15,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<LoadCartEvent>(_onLoadCart);
     on<AddToCartEvent>(_onAddToCart);
     on<RemoveFromCart>(_onRemoveFromCart);
+    on<ClearCartAndUser>(_onClearCart);
   }
 
   void _onLoadCart(LoadCartEvent event,
@@ -117,5 +118,26 @@ class CartBloc extends Bloc<CartEvent, CartState> {
 
 
   }
+
+  void _onClearCart(ClearCartAndUser event,
+      Emitter<CartState> emit) {
+    print("starting clear cart");
+    emit(state.copyWith(status: CartStatus.loading));
+    try {
+      emit(state.copyWith(
+        status: CartStatus.loaded,
+        cart: const Cart(
+          userId: '',
+          cartItems: [],
+        ),
+      ),);
+      print("afterload");
+      print(state.status);
+    } catch (err) {
+      emit(state.copyWith(status: CartStatus.loading));
+      print(err);
+    }
+  }
+
 
 }

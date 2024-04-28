@@ -1,4 +1,5 @@
 import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/auth_repository.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/state/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -39,6 +40,11 @@ class LoginView extends StatelessWidget{
               const SnackBar(content: Text('Login Success'),
               ),
             );
+
+            context.read<CartBloc>().add(
+                LoadCartEvent(userId: context.read<AuthRepository>().currentUser?.uid)
+            );
+
             context.go('/categories');
           }
           if (state.formStatus == FormStatus.submissionFailure) {
@@ -48,6 +54,11 @@ class LoginView extends StatelessWidget{
             );
           }
           if (state.formStatus == FormStatus.emailVerificationPending) {
+
+            context.read<CartBloc>().add(
+                LoadCartEvent(userId: context.read<AuthRepository>().currentUser?.uid)
+            );
+
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Email Verification Pending'),
               ),

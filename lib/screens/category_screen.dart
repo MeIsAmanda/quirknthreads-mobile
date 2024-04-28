@@ -44,6 +44,9 @@ class CategoriesScreen extends StatelessWidget {
 
             (appBlocState.status == AppStatus.authenticated) ?
             IconButton(onPressed: () {
+              context.read<CartBloc>().add(
+                  ClearCartAndUser()
+              );
               context.read<AppBloc>().add(AppLogoutRequested());
             }, icon: const Icon(Icons.logout))
                 : IconButton(

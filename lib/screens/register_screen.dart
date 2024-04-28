@@ -82,7 +82,7 @@ class RegisterView extends StatelessWidget {
                     children: [
                       const Text('Already have an account?'),
                       TextButton(onPressed: () {
-                        context.pushNamed('login');
+                        context.pop('login');
                       }, child: const Text('Login')),
                     ],
                   )
