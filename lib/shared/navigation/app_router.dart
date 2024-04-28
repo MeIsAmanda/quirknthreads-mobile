@@ -70,6 +70,8 @@ class AppRouter {
       final isLogin = state.matchedLocation == '/';
       final isRegister = state.matchedLocation == '/register';
 
+      print ("isAuthenticated $isAuthenticated isLogin $isLogin isRegister $isRegister");
+
       if (isAuthenticated && isLogin) {
         return '/categories';
       }
@@ -78,7 +80,7 @@ class AppRouter {
         return '/';
       }
 
-      if (!isAuthenticated && !isLogin) {
+      if (!isAuthenticated && !isLogin && !isRegister) {
         return '/';
       }
 
