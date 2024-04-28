@@ -51,6 +51,12 @@ class RegisterView extends StatelessWidget {
               ),
           );
         }
+        if (state.formStatus == FormStatus.invalid) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Email or Password invalid. Please use strong password.'),
+              ),
+          );
+        }
       },
       builder: (context, state) {
         return Scaffold(

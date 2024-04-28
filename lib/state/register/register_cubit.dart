@@ -44,13 +44,27 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   void passwordChanged(String value){
+    final passwordRegExp = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$');
+
     try {
-      emit(
-        state.copyWith(
-          password: value,
-          passwordStatus: PasswordStatus.valid,
-        ),
-      );
+
+      if (passwordRegExp.hasMatch(value)) {
+        emit(
+          state.copyWith(
+            password: value,
+            passwordStatus: PasswordStatus.valid,
+          ),
+        );
+      } 
+      else {
+        // Password is invalid
+        emit(
+          state.copyWith(
+            passwordStatus: PasswordStatus.invalid,
+          ),
+        );
+      }
+
     } on ArgumentError {
       // validate email
 
