@@ -1,6 +1,6 @@
 part of 'app_bloc.dart';
 
-enum AppStatus {unknown, authenticated, unauthenticated}
+enum AppStatus {unknown, authenticated, unauthenticated, pendingEmail}
 
 class AppState extends Equatable{
   final AppStatus status;

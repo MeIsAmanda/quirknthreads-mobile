@@ -41,6 +41,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     ) async {
     if (event.user == null) {
       emit(state.copyWith(status: AppStatus.unauthenticated, user: null));
+    }else if (!(event.user?.emailVerified ?? false)){
+            // if verified -> false here
+            // if not verified -> true
+      emit(state.copyWith(status: AppStatus.pendingEmail, user: null));
     } else {
       emit(state.copyWith(status: AppStatus.authenticated, user: event.user));
     }

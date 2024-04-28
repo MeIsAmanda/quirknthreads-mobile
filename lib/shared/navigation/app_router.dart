@@ -67,17 +67,19 @@ class AppRouter {
 
     redirect: (context, state) {
       final isAuthenticated = appBloc.state.status == AppStatus.authenticated;
+      final pendingEmail = appBloc.state.status == AppStatus.pendingEmail;
       final isLogin = state.matchedLocation == '/';
       final isRegister = state.matchedLocation == '/register';
 
-      print ("isAuthenticated $isAuthenticated isLogin $isLogin isRegister $isRegister");
+      print ("isAuthenticated $isAuthenticated isLogin $isLogin isRegister $isRegister pendingEmail $pendingEmail");
+
+      // if (!isAuthenticated && isLogin && pendingEmail) {
+      //   return '/';
+      // }
+
 
       if (isAuthenticated && isLogin) {
         return '/categories';
-      }
-
-      if (isAuthenticated && isRegister) {
-        return '/';
       }
 
       if (!isAuthenticated && !isLogin && !isRegister) {

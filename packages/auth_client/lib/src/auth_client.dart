@@ -35,6 +35,8 @@ class AuthClient{
           email: email,
           password: password
       );
+      print("signInWithEmailAndPassword");
+      print(credential);
       return credential.user;
     } catch (err) {
       throw Exception('Failed to login: $err');

@@ -21,13 +21,10 @@ class AuthRepository {
     required String email,
     required String password,
 }) async {
-    print("Inside here");
     final user = await authClient.register(email: email, password: password);
-    print("Inside here 2");
     if (user == null) {
       return false;
     }
-    print("Inside here 3");
     // Set default roles to "customer"
     final userData = {
       'email': email,
@@ -46,6 +43,8 @@ class AuthRepository {
     // Send email verification
     await user.sendEmailVerification();
 
+    await logout();
+
     return true;
 
   }
@@ -59,6 +58,11 @@ class AuthRepository {
     if (user == null) {
       return false;
     }
+
+    if (user.emailVerified == false) {
+      await logout();
+    }
+
     return true;
   }
 

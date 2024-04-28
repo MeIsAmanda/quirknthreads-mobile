@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../models/form_status.dart';
+import '../state/cart/cart_bloc.dart';
 import '../state/register/register_cubit.dart';
 import '../main.dart';
 
@@ -37,6 +38,11 @@ class RegisterView extends StatelessWidget {
             const SnackBar(content: Text('Registration Success. Please verify your email.'),
             ),
           );
+
+          // context.read<CartBloc>().add(
+          //     LoadCartEvent(userId: context.read<AuthRepository>().currentUser?.uid)
+          // );
+
           context.go('/');
         }
         if (state.formStatus == FormStatus.submissionFailure) {
