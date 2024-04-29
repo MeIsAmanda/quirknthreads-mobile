@@ -7,6 +7,7 @@ import '../../screens/catalog_screen.dart';
 import '../../screens/category_screen.dart';
 import '../../screens/checkout_screen.dart';
 import '../../screens/login_screen.dart';
+import '../../screens/orders_screen.dart';
 import '../../screens/register_screen.dart';
 import '../../state/bloc/app_bloc.dart';
 import 'go_router_refresh_stream.dart';
@@ -61,6 +62,14 @@ class AppRouter {
         path: '/register',
         builder: (BuildContext context, GoRouterState state) {
           return const RegisterScreen();
+        },
+      ),
+      GoRoute(
+        name: 'orders',
+        path: '/orders/:userId',
+        builder: (BuildContext context, GoRouterState state) {
+          final userId = state.pathParameters['userId'] as String;
+          return OrdersScreen(userId: userId);
         },
       ),
     ],

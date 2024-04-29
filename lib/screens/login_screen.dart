@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../main.dart';
 import '../models/form_status.dart';
 import '../state/login/login_cubit.dart';
+import '../state/order/order_bloc.dart';
 
 class LoginScreen extends StatelessWidget{
   const LoginScreen({super.key});
@@ -58,6 +59,7 @@ class LoginView extends StatelessWidget{
             context.read<CartBloc>().add(
                 LoadCartEvent(userId: context.read<AuthRepository>().currentUser?.uid)
             );
+
 
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Email Verification Pending'),

@@ -12,6 +12,7 @@ import 'package:go_router/go_router.dart';
 import '../repositories/auth_repository.dart';
 import '../state/bloc/app_bloc.dart';
 import '../state/category/category_bloc.dart';
+import '../state/order/order_bloc.dart';
 
 class CategoriesScreen extends StatelessWidget {
   const CategoriesScreen({super.key});
@@ -29,9 +30,19 @@ class CategoriesScreen extends StatelessWidget {
       appBar: AppBar(
           title: const Text('Categories'),
           actions: [
+
             IconButton(
               onPressed: () {
-                // Navigator.pushNamed(context, '/cart');
+                context.pushNamed('orders',
+                    pathParameters: {'userId': context.read<AuthRepository>().currentUser!.uid});
+              },
+              icon: Badge(
+                child: const Icon(Icons.list_alt_outlined),
+              ),
+            ),
+
+            IconButton(
+              onPressed: () {
                 context.pushNamed('cart');
               },
               icon: Badge(
@@ -40,7 +51,6 @@ class CategoriesScreen extends StatelessWidget {
                 child: const Icon(Icons.shopping_cart),
               ),
             ),
-
 
             (appBlocState.status == AppStatus.authenticated) ?
             IconButton(onPressed: () {

@@ -6,49 +6,51 @@ import 'order_status.dart';
 class Order {
   final String id;
   final String userId;
-  final OrderStatus status;
-  final double total;
+  final String orderStatus;
+  final double totalAmount;
   final List<Map<String,dynamic>> items;
-  final DateTime? createdAt;
+  final Timestamp date;
 
   Order({
     required this.id,
     required this.userId,
-    required this.status,
-    required this.total,
+    required this.orderStatus,
+    required this.totalAmount,
     required this.items,
-    this.createdAt,
+    required this.date,
 });
 
   Order copyWith({
     String? id,
     String? userId,
-    OrderStatus? status,
-    double? total,
+    String? orderStatus,
+    double? totalAmount,
     List<Map<String, dynamic>>? items,
-    DateTime? createdAt,
+    Timestamp? date,
 }) {
     return Order(
       id: id ?? this.id,
       userId: userId ?? this.userId,
-      status: status ?? this.status,
-      total: total ?? this.total,
+      orderStatus: orderStatus ?? this.orderStatus,
+      totalAmount: totalAmount ?? this.totalAmount,
       items: items ?? this.items,
-      createdAt: createdAt ?? this.createdAt,
+      date: date ?? this.date,
     );
   }
 
   factory Order.fromJson(Map<String, dynamic> json, {String? id}) {
+    print("printing from json");
+    print(json);
     return Order(
       id: id ?? json['id'] ?? const Uuid().v4(),
       userId: json['userId'],
-      status: OrderStatus.values[json['status']],
-      total: json['total'].toDouble(),
+      orderStatus: json['orderStatus'],
+      totalAmount: json['totalAmount'].toDouble(),
       items: json['items']
         .map((item) => item)
         .toList()
         .cast<Map<String, dynamic>>() as List<Map<String, dynamic>>,
-      createdAt: json['createdAt'].toDate(),
+      date: json['date'],
     );
 
   }
@@ -57,10 +59,10 @@ class Order {
     return {
       'id': id,
       'userId': userId,
-      'status': status.index,
-      'total': total,
+      'orderStatus': orderStatus,
+      'totalAmount': totalAmount,
       'items': items,
-      'createdAt': createdAt ?? FieldValue.serverTimestamp(),
+      'date': date ?? FieldValue.serverTimestamp(),
     };
   }
   

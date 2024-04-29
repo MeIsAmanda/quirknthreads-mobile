@@ -20,9 +20,11 @@ class OrderRepository {
           data: {
             'userId': userId,
             'items': items,
-            'total': total,
-            'status': OrderStatus.processing.index,
-            'createdAt': FieldValue.serverTimestamp(),
+            'totalAmount': total,
+            'orderStatus': OrderStatus.processing.label,
+            'date': FieldValue.serverTimestamp(),
+            'deliveryStatus': '',
+            'deliveryPersonnelId': '',
           },
         );
         return orderId;

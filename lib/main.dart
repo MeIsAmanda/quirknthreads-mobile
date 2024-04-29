@@ -9,6 +9,7 @@ import 'package:ecommerce_with_flutter_firebase_and_stripe/shared/navigation/app
 import 'package:ecommerce_with_flutter_firebase_and_stripe/state/bloc/app_bloc.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/state/cart/cart_bloc.dart';
 import 'package:ecommerce_with_flutter_firebase_and_stripe/state/category/category_bloc.dart';
+import 'package:ecommerce_with_flutter_firebase_and_stripe/state/order/order_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,6 +121,15 @@ class MyApp extends StatelessWidget {
                 LoadCartEvent(userId: authRepository.currentUser?.uid
                 ),
             ),
+          ),
+          BlocProvider(
+            lazy: true,
+            create: (context) => OrderBloc(orderRepository: orderRepository,
+                productRepository: productRepository)
+              ..add(
+                LoadOrdersEvent(userId: authRepository.currentUser!.uid
+                ),
+              ),
           ),
 
         ],
