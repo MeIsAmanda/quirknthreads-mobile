@@ -3,6 +3,7 @@ import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/order_re
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:go_router/go_router.dart';
 
 import '../main.dart';
 import '../state/bloc/app_bloc.dart';
@@ -58,7 +59,6 @@ class CheckoutView extends StatelessWidget {
       );
     }
     if(state.paymentStatus == PaymentStatus.success) {
-      if(state.paymentStatus == PaymentStatus.error) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               behavior: SnackBarBehavior.floating,
@@ -68,7 +68,11 @@ class CheckoutView extends StatelessWidget {
               ),
             )
         );
-      }
+        context.read<CartBloc>().add(
+            ClearCart()
+        );
+        context.pushNamed('categories');
+
     }
   },
   builder: (context, state) {
