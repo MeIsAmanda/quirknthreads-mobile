@@ -82,6 +82,17 @@ class CheckoutView extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
+
+              TextFormField(
+                keyboardType: TextInputType.streetAddress,
+                decoration: const InputDecoration(
+                    label: Text('Shipping Address'),
+                    border: OutlineInputBorder(),
+                ),
+              ),
+
+              const SizedBox(height: 12.0),
+
               Text(
                 'Insert your card details',
                 style: textTheme.titleLarge!.copyWith(

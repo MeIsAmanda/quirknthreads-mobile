@@ -36,9 +36,7 @@ class CategoriesScreen extends StatelessWidget {
                 context.pushNamed('orders',
                     pathParameters: {'userId': context.read<AuthRepository>().currentUser!.uid});
               },
-              icon: Badge(
-                child: const Icon(Icons.list_alt_outlined),
-              ),
+              icon: const Icon(Icons.list_alt_outlined)
             ),
 
             IconButton(

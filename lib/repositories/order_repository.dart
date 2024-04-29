@@ -25,6 +25,7 @@ class OrderRepository {
             'date': FieldValue.serverTimestamp(),
             'deliveryStatus': '',
             'deliveryPersonnelId': '',
+            'address': 'Blk 123 Jurong West St 11 Singapore 555123',
           },
         );
         return orderId;

@@ -37,6 +37,7 @@ class LoginView extends StatelessWidget{
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.formStatus == FormStatus.submissionSuccess){
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Login Success'),
               ),
@@ -49,6 +50,7 @@ class LoginView extends StatelessWidget{
             context.go('/categories');
           }
           if (state.formStatus == FormStatus.submissionFailure) {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Login Failure'),
               ),
@@ -60,7 +62,7 @@ class LoginView extends StatelessWidget{
                 LoadCartEvent(userId: context.read<AuthRepository>().currentUser?.uid)
             );
 
-
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Email Verification Pending'),
               ),

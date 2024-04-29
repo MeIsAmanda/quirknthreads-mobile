@@ -139,6 +139,7 @@ class MyApp extends StatelessWidget {
             print("main builder");
             print(cart);
             return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
               title: 'Quirk n Threads',
               // theme: const AppTheme().themeData,
               routerConfig: AppRouter(appBloc: context.read<AppBloc>()).router,
