@@ -29,6 +29,7 @@ class AuthRepository {
     final userData = {
       'email': email,
       'joinDate': Timestamp.now(),
+      'lastLogin': Timestamp.now(),
       'name': email.split('@')[0], // Use email username as default name
       'roles': ['customer'],
       'uid': user.uid,
