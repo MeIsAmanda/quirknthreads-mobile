@@ -34,6 +34,8 @@ class RegisterView extends StatelessWidget {
     return BlocConsumer<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state.formStatus == FormStatus.submissionSuccess){
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Registration Success. Please verify your email.'),
             ),
@@ -46,9 +48,19 @@ class RegisterView extends StatelessWidget {
           context.go('/');
         }
         if (state.formStatus == FormStatus.submissionFailure) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
           ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Registration Failure'),
               ),
+          );
+        }
+        if (state.formStatus == FormStatus.invalid) {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Please use a stronger password.'),
+            ),
           );
         }
       },
