@@ -26,6 +26,7 @@ class CheckoutRepository {
         paymentMethodId: paymentMethodId,
         items: items,
       );
+      print(response);
       if (response['error'] != null){
         return{
           'status': OrderStatus.paymentFailed,

@@ -1,15 +1,15 @@
 import 'package:auth_client/auth_client.dart';
 import 'package:db_client/db_client.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/auth_repository.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/checkout_repository.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/order_repository.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/screens/login_screen.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/screens/register_screen.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/shared/navigation/app_router.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/state/bloc/app_bloc.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/state/cart/cart_bloc.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/state/category/category_bloc.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/state/order/order_bloc.dart';
+import 'package:quirknthreads/repositories/auth_repository.dart';
+import 'package:quirknthreads/repositories/checkout_repository.dart';
+import 'package:quirknthreads/repositories/order_repository.dart';
+import 'package:quirknthreads/screens/login_screen.dart';
+import 'package:quirknthreads/screens/register_screen.dart';
+import 'package:quirknthreads/shared/navigation/app_router.dart';
+import 'package:quirknthreads/state/bloc/app_bloc.dart';
+import 'package:quirknthreads/state/cart/cart_bloc.dart';
+import 'package:quirknthreads/state/category/category_bloc.dart';
+import 'package:quirknthreads/state/order/order_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +27,8 @@ import 'screens/catalog_screen.dart';
 import 'screens/category_screen.dart';
 import 'screens/checkout_screen.dart';
 
+import 'package:firebase_app_check/firebase_app_check.dart';
+
 
 // const userId = 'user_1234';
 // var cart = const Cart(
@@ -39,6 +41,25 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // await FirebaseAppCheck.instance.activate(
+  //   // You can also use a ReCaptchaEnterpriseProvider provider instance as an
+  //   // argument for webProvider
+  //   webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+  //   // Default provider for Android is the Play Integrity provider. You can use the "AndroidProvider" enum to choose
+  //   // your preferred provider. Choose from:
+  //   // 1. Debug provider
+  //   // 2. Safety Net provider
+  //   // 3. Play Integrity provider
+  //   androidProvider: AndroidProvider.debug,
+  //   // Default provider for iOS/macOS is the Device Check provider. You can use the "AppleProvider" enum to choose
+  //   // your preferred provider. Choose from:
+  //   // 1. Debug provider
+  //   // 2. Device Check provider
+  //   // 3. App Attest provider
+  //   // 4. App Attest provider with fallback to Device Check provider (App Attest provider is only available on iOS 14.0+, macOS 14.0+)
+  //   appleProvider: AppleProvider.appAttest,
+  // );
+
 
   final authClient = AuthClient();
   final dbClient = DbClient();

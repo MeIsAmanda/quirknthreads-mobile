@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:ecommerce_with_flutter_firebase_and_stripe/main.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/models/category.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/category_repository.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/state/cart/cart_bloc.dart';
+import 'package:quirknthreads/main.dart';
+import 'package:quirknthreads/models/category.dart';
+import 'package:quirknthreads/repositories/category_repository.dart';
+import 'package:quirknthreads/state/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -19,6 +19,8 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("build category");
+
     final cart = context.watch<CartBloc>().state.cart;
 
     final appBlocState = context

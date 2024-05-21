@@ -1,5 +1,5 @@
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/checkout_repository.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/order_repository.dart';
+import 'package:quirknthreads/repositories/checkout_repository.dart';
+import 'package:quirknthreads/repositories/order_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';

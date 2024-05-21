@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/auth_repository.dart';
+import 'package:quirknthreads/repositories/auth_repository.dart';
 import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
 
@@ -58,6 +58,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       } 
       else {
         // Password is invalid
+        print("helloo password lousy");
         emit(
           state.copyWith(
             passwordStatus: PasswordStatus.invalid,

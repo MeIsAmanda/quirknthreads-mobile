@@ -1,5 +1,5 @@
-import 'package:ecommerce_with_flutter_firebase_and_stripe/repositories/auth_repository.dart';
-import 'package:ecommerce_with_flutter_firebase_and_stripe/state/cart/cart_bloc.dart';
+import 'package:quirknthreads/repositories/auth_repository.dart';
+import 'package:quirknthreads/state/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -37,6 +37,8 @@ class LoginView extends StatelessWidget{
       body: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state.formStatus == FormStatus.submissionSuccess){
+            print("login form successful");
+
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Login Success'),
@@ -96,6 +98,12 @@ class LoginView extends StatelessWidget{
                   context.read<LoginCubit>().login();
                 }, child: const Text('Login')),
                 const SizedBox(height: 8.0),
+                FilledButton(onPressed: (state.formStatus == FormStatus.submissionInProgress)
+                    ? null : () {
+                  //context.read<LoginCubit>().loginWithGoogle();
+                  getSmsCodeFromUser(context);
+                }, child: const Text('Sign in With Google')),
+                const SizedBox(height: 8.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -112,4 +120,50 @@ class LoginView extends StatelessWidget{
       ),
     );
   }
+
+  Future<String?> getSmsCodeFromUser(BuildContext context) async {
+    String? smsCode;
+
+    // Update the UI - wait for the user to enter the SMS code
+    await showDialog<String>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('SMS code:'),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Sign in'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                smsCode = null;
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+          content: Container(
+            padding: const EdgeInsets.all(20),
+            child: TextField(
+              onChanged: (value) {
+                smsCode = value;
+              },
+              textAlign: TextAlign.center,
+              autofocus: true,
+            ),
+          ),
+        );
+      },
+    );
+
+    return smsCode;
+  }
+
+
+
 }
+

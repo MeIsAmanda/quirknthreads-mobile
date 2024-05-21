@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:437738972765:android:1905635e2ff20757098fb4",
         "android_client_info": {
-          "package_name": "com.example.ecommerce_with_flutter_firebase_and_stripe"
+          "package_name": "com.example.quirknthreads"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:437738972765:android:b8b91761858e0a94098fb4",
         "android_client_info": {
-          "package_name": "com.example.quirknthread"
+          "package_name": "com.example.quirknthreads"
         }
       },
       "oauth_client": [],

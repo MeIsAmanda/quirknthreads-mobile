@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:db_client/db_client.dart';
 import 'package:auth_client/auth_client.dart';
+import 'package:openid_client/openid_client_io.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AuthRepository {
   final AuthClient authClient;
@@ -67,8 +69,17 @@ class AuthRepository {
     return true;
   }
 
+
   Future<void> logout() async {
     await authClient.logout();
+  }
+
+  Future<firebase_auth.UserCredential> loginWithGoogle() async {
+    return await authClient.signInWithGoogle();
+  }
+
+  Future<void> verifyPhoneNumber() async {
+    await authClient.verifyPhoneNumber();
   }
 
   Future<bool> isEmailVerified() async {
